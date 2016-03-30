@@ -32,9 +32,21 @@ def R(state):
 		a, w = state[0], state[1:]
 		return R(w) - L(w) + a if a > L(w) else 0
 
+def get_outcome_class(state):
+	l = L(state)
+	r = R(state)
+	if l == 0:
+		return "P" if r == 0 else "L"
+	else:
+		return "R" if r == 0 else "N"
+
 if __name__ == "__main__":
 	text_state = input("state: ")
 	state = [int(num_string) for num_string in text_state.split(" ")]
+	outcome_class = get_outcome_class(state)
+	l = L(state)
+	r = R(state)
 	print("w = " + " ".join(str(num) for num in state))
-	print("L(w) = " + str(L(state)))
-	print("R(w) = " + str(R(state)))
+	print("outcome class " + outcome_class)
+	print("L(w) = " + str(l))
+	print("R(w) = " + str(r))
