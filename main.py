@@ -1,3 +1,16 @@
+def memoize(f):
+	cache = {}
+	def wrapper(*args, **kwargs):
+		key = repr(args) + repr(kwargs)
+		if key not in cache:
+			result = f(*args, **kwargs)
+			cache[key] = result
+			return result
+		else:
+			return cache[key]
+	return wrapper
+
+@memoize
 def L(state):
 	if len(state) == 1:
 		return state[0]
@@ -8,6 +21,7 @@ def L(state):
 		w, b = state[:-1], state[-1]
 		return L(w) - R(w) + b if b > R(w) else 0
 
+@memoize
 def R(state):
 	if len(state) == 1:
 		return state[0]
